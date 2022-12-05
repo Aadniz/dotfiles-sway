@@ -1,0 +1,215 @@
+call plug#begin('~/.config/nvim/plugged')
+Plug 'liuchengxu/vim-which-key'
+"Plug 'sonph/onehalf', {'rtp': 'vim/'}
+"Plug 'dracula/vim', { 'name': 'dracula' }
+Plug 'doums/darcula'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'bfredl/nvim-miniyank'
+Plug 'moll/vim-bbye'
+Plug 'itchyny/lightline.vim'
+"Plug 'tpope/vim-commentary'
+"Plug 'preservim/nerdcommenter'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-abolish'
+Plug 'amiorin/vim-project'
+Plug 'mhinz/vim-startify'
+Plug 'StanAngeloff/php.vim'
+Plug '2072/PHP-Indenting-for-VIm'
+Plug 'vim-scripts/phpfolding.vim'
+Plug 'maksimr/vim-jsbeautify'
+Plug 'vim-php/tagbar-phpctags.vim'
+Plug 'shawncplus/phpcomplete.vim'
+"Plug 'stephpy/vim-php-cs-fixer'
+Plug 'ncm2/ncm2'
+"Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'XDEBUG_MODE=off \composer --no-dev -o'}
+"Plug 'phpactor/ncm2-phpactor'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
+Plug 'junegunn/fzf.vim'
+Plug 'neomake/neomake'
+Plug 'SirVer/ultisnips'
+Plug 'majutsushi/tagbar'
+"Plug 'joonty/vdebug'
+"Plug 'tobyS/vmustache'
+"Plug 'tobyS/pdv'
+Plug 'vim-scripts/IndentAnything'
+Plug 'vim-scripts/cream-progressbar'
+Plug 'jiangmiao/auto-pairs'
+Plug 'chrisbra/Colorizer'
+Plug 'Yggdroot/indentLine'
+"Plug 'airblade/vim-gitgutter'
+" My Plugin
+Plug 'D3faIt/Vim-Jetbrains-Deployment'
+Plug 'D3faIt/vim-rest-console'
+call plug#end()
+
+" Which Key
+let mapleader=" "
+source $HOME/.config/nvim/keys/which-key.vim
+call which_key#register('<Space>', "g:which_key_map")
+
+" Darcula
+syntax on
+colorscheme darcula
+set termguicolors
+let g:lightline = { 'colorscheme': 'darculaOriginal' }
+
+" ripgrep
+nnoremap <leader>a :Rg<space>
+nnoremap <leader>A :exec "Rg ".expand("<cword>")<cr>
+
+autocmd VimEnter * command! -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+" Folding plugin
+let g:tagbar_phpctags_memory_limit = '1024M'
+
+let php_sql_query=1
+let php_htmlInStrings=1
+let php_noShortTags=1
+let php_folding=1
+"let b:phpfold_use = 1
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Colorizer
+let g:colorizer_auto_color = 1
+let g:colorizer_syntax = 1
+
+" AAdniz config
+
+set number
+set mouse=a
+set nowrap
+set clipboard+=unnamedplus
+
+map <C-e> <Esc>:NERDTreeToggle<CR>
+imap <C-e> <Esc>:NERDTreeToggle<CR>
+
+map - :
+
+"" Make vim act like nano
+" just save
+map <C-O> <Esc>:w<CR>
+imap <C-O> <Esc>:w<CR>
+
+" save and quit
+map <C-X>y <Esc>:wq<CR>
+imap <C-X>y <Esc>:wq<CR>
+
+" try to quit
+map <C-X> <Esc>:q<CR>
+imap <C-X> <Esc>:q<CR>
+
+" force quit
+map <C-X><C-X> <Esc>:q!<CR>
+imap <C-X><C-X> <Esc>:q!<CR>
+
+" remove line
+map <C-K> <Esc>dd
+imap <C-K> <Esc>dd<Esc>i
+
+" remove line
+map <C-W> <Esc>/
+imap <C-W> <Esc>/
+
+" shift+arrow selection
+nmap <S-Up> v<Up>
+vmap <S-Up> <Up>
+imap <S-Up> <Esc>v<Up>
+nmap <S-Down> v<Down>
+vmap <S-Down> <Down>
+imap <S-Down> <Esc>v<Down>
+nmap <S-Left> v<Left>
+vmap <S-Left> <Left>
+imap <S-Left> <Esc>v<Left>
+nmap <S-Right> v<Right>
+vmap <S-Right> <Right>
+imap <S-Right> <Esc><Right>v<Right>
+nmap <S-Home> v<Home>
+vmap <S-Home> <Home>
+imap <S-Home> <Esc>v<Home>
+nmap <S-End> v<End><Left>
+vmap <S-End> <End><Left>
+imap <S-End> <Esc><Right>v<End><Left>
+
+" Moving
+nmap <C-Up> <C-u>
+nmap <C-Down> <C-d>
+imap <C-Up> <Esc><C-u>i
+imap <C-Down> <Esc><C-d>i
+
+" Highlight and then search
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+" Search and replace
+vnoremap <C-R> y:%s/<C-R>=escape(@",'/\')<CR>//g<Left><Left>
+" FZF search
+nnoremap <C-Q> <Esc>:FZF<CR>
+imap <C-Q> <Esc>:FZF<CR>
+vmap <C-Q> y:FZF -q <C-R>=escape(@",'/\')<CR><CR>
+vmap <C-F> y:Rg <C-R>=escape(@",'/\')<CR><CR>
+" Rest VIM
+let g:vrc_elasticsearch_support = 1
+let g:vrc_syntax_highlight_response = 1
+let g:vrc_output_buffer_name = '__VRC_OUTPUT.json'
+
+" bind CTRL-B to CTRL-V
+vmap <C-B> <C-V>
+" prevent cut
+nnoremap d "_d
+vnoremap d "_d
+
+" Open terminal underneeth (Nope fuck that)
+" map <F4> <Esc>:bo 10sp \| term<CR>i
+
+" Backup
+"set backup
+"silent !mkdir /tmp/vim_backup > /dev/null 2>&1
+"set backupdir=/tmp/vim_backup
+
+" Folding
+" set foldmethod=indent
+" set foldlevel=1
+set foldclose=all
+
+" Python
+autocmd BufNewFile,BufRead *.py set tabstop=4
+autocmd BufNewFile,BufRead *.py set softtabstop=4
+autocmd BufNewFile,BufRead *.py set shiftwidth=4
+autocmd BufNewFile,BufRead *.py set textwidth=80
+autocmd BufNewFile,BufRead *.py set smarttab
+autocmd BufNewFile,BufRead *.py set expandtab
+
+" JS, HTML, CSS
+autocmd BufNewFile,BufRead [*.js, *.html, *.css] set tabstop=2
+autocmd BufNewFile,BufRead [*.js, *.html, *.css] set softtabstop=2
+autocmd BufNewFile,BufRead [*.js, *.html, *.css] set shiftwidth=2
+
+" PHP
+autocmd BufNewFile,BufRead *.php :EnableFastPHPFolds
+
+" JSON
+autocmd BufNewFile,BufRead *.json :set modifiable
+autocmd BufNewFile,BufRead *.json :call JsonBeautify()
+autocmd BufNewFile,BufRead *.json :set readonly
+
+" REST
+autocmd BufNewFile,BufRead *.rest :%g /^{/ normal! zf%
+
+" SFTP setup
+" source $HOME/.config/nvim/scripts/JB_SFTP.vim
+map <C-S> <Esc>:call JB_SFTP_UploadFile()<CR>
+imap <C-S> <Esc>:call JB_SFTP_UploadFile()<CR>
+

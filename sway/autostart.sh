@@ -15,7 +15,7 @@ swaymsg "workspace 31; exec kitty --session /home/chiya/.config/kitty/session.co
 
 sleep 1
 # Left monitor
-swaymsg "workspace 11; exec discord"
+swaymsg "workspace 11; exec discord & discord-canary"
 swaymsg "workspace 11; exec element-desktop"
 
 sleep 1

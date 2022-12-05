@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='scp://loli@192.168.1.101//var/www/html/'
+let g:netrw_dirhist_2='scp://aadniz@192.168.1.130//var/www/html/'
+let g:netrw_dirhist_1='scp://loli@192.168.1.101:22/home/'
+let g:netrw_dirhist_0='scp://loli@192.168.1.101:22/'
+let g:netrw_dirhist_9='scp://aadniz@192.168.1.130//media/LStorage/'
+let g:netrw_dirhist_8='scp://aadniz@192.168.1.130//media/'
+let g:netrw_dirhist_7='scp://aadniz@192.168.1.130//media/LStorage/'
+let g:netrw_dirhist_6='scp://aadniz@192.168.1.130//media/'
+let g:netrw_dirhist_5='scp://aadniz@192.168.1.130//LStorage/'
+let g:netrw_dirhist_4='scp://aadniz@192.168.1.130//var/www/html/'

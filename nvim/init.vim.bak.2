@@ -1,0 +1,212 @@
+call plug#begin('~/.config/nvim/plugged')
+"Plug 'ncm2/ncm2'
+Plug 'itchyny/lightline.vim'
+Plug 'godlygeek/tabular'
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'ncm2/ncm2'
+Plug 'Raimondi/delimitMate'
+Plug 'plasticboy/vim-markdown'
+Plug 'junegunn/goyo.vim'
+Plug 'vim-pandoc/vim-pandoc'
+"Plug 'D3faIt/vim-rest-console'
+Plug 'scrooloose/nerdtree'
+Plug 'mg979/vim-visual-multi', {'branch': 'test'}
+Plug 'simrat39/rust-tools.nvim'
+
+" Copy paste
+" Collection of common configurations for the Nvim LSP client
+Plug 'neovim/nvim-lspconfig'
+
+" Autocompletion framework
+Plug 'hrsh7th/nvim-cmp'
+" cmp LSP completion
+Plug 'hrsh7th/cmp-nvim-lsp'
+" cmp Snippet completion
+Plug 'hrsh7th/cmp-vsnip'
+" cmp Path completion
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
+" See hrsh7th other plugins for more great completion sources!
+
+" Adds extra functionality over rust analyzer
+Plug 'simrat39/rust-tools.nvim'
+
+call plug#end()
+
+" No clue what I'm doing
+lua <<EOF
+
+-- nvim_lsp object
+local nvim_lsp = require'lspconfig'
+
+local opts = {
+    tools = {
+        runnables = {
+            use_telescope = true
+        },
+        inlay_hints = {
+            auto = true,
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
+        -- on_attach = on_attach,
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy"
+                },
+            }
+        }
+    },
+}
+
+require('rust-tools').setup(opts)
+EOF
+
+" Treat all .md files as markdown
+autocmd BufNewFile,BufRead *.md set filetype=markdown
+
+" Highlight the line the cursor is on
+autocmd FileType markdown set cursorline
+
+" Hide and format markdown elements like **bold**
+autocmd FileType markdown set conceallevel=2
+
+" Set spell check to British English
+autocmd FileType markdown setlocal spell spelllang=nb
+
+autocmd FileType markdown imap <C-O> <Esc>:w<CR><Esc>:Pandoc pdf<CR>
+autocmd FileType markdown map <C-O> <Esc>:w<CR><Esc>:Pandoc pdf<CR>
+
+" Monokai-tasty
+let g:vim_monokai_tasty_italic = 1                  " Allow italics.
+colorscheme vim-monokai-tasty                       " Enable monokai theme.
+
+" LightLine.vim 
+set laststatus=2              " To tell Vim we want to see the statusline.
+let g:lightline = {
+   \ 'colorscheme':'monokai_tasty',
+   \ }
+
+" NerdTree
+map <C-e> <Esc>:NERDTreeToggle<CR>
+imap <C-e> <Esc>:NERDTreeToggle<CR>
+
+" Configuration for vim-markdown
+let g:vim_markdown_conceal = 2
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_math = 1
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_edit_url_in = 'tab'
+let g:vim_markdown_follow_anchor = 1
+
+" Rest VIM
+let g:vrc_elasticsearch_support = 1
+let g:vrc_syntax_highlight_response = 1
+let g:vrc_output_buffer_name = '__VRC_OUTPUT.json'
+
+" Neovide
+if exists("g:neovide")
+  let g:neovide_refresh_rate=165
+endif
+
+set termguicolors
+
+set expandtab
+
+" Use two spaces instead of tabs
+set tabstop=2
+
+" The same but for indents
+set shiftwidth=2
+
+" Keep cursor in approximately the middle of the screen
+set scrolloff=12
+
+" AAdniz config
+
+set number
+set mouse=a
+set nowrap
+set clipboard+=unnamedplus
+
+map - :
+
+"" Make vim act like nano
+" just save
+map <C-O> <Esc>:w<CR>
+imap <C-O> <Esc>:w<CR>
+
+" save and quit
+map <C-X>y <Esc>:wq<CR>
+imap <C-X>y <Esc>:wq<CR>
+
+" try to quit
+map <C-X> <Esc>:q<CR>
+imap <C-X> <Esc>:q<CR>
+
+" force quit
+map <C-X><C-X> <Esc>:q!<CR>
+imap <C-X><C-X> <Esc>:q!<CR>
+  
+" remove line
+"map <C-K> <Esc>dd
+"imap <C-K> <Esc>dd<Esc>i
+  
+" Search
+map <C-W> <Esc>/
+imap <C-W> <Esc>/
+  
+" Multi cursor options
+let g:VM_maps = {}
+let g:VM_maps["Select Cursor Down"] = '<M-j>'
+let g:VM_maps["Select Cursor Up"]   = '<M-k>'
+
+" shift+vim keys selection
+nmap <S-k> vk
+vmap <S-k> k
+imap <S-k> <Esc>vk
+nmap <S-j> vj
+vmap <S-j> j
+imap <S-j> <Esc>vj
+nmap <S-h> vh
+vmap <S-h> h
+imap <S-h> <Esc>vh
+nmap <S-l> vl
+vmap <S-l> l
+imap <S-l> <Esc>lvl
+nmap <S-Home> v<Home>
+vmap <S-Home> <Home>
+imap <S-Home> <Esc>v<Home>
+nmap <S-End> v<End><Left>
+vmap <S-End> <End><Left>
+imap <S-End> <Esc><Right>v<End><Left>
+
+" Moving
+"nmap <C-Up> <C-u>
+"nmap <C-Down> <C-d>
+"imap <C-Up> <Esc><C-u>i
+"imap <C-Down> <Esc><C-d>i
+
+" Highlight and then search
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+" Search and replace
+vnoremap <C-R> y:%s/<C-R>=escape(@",'/\')<CR>//g<Left><Left>
+
+" prevent cut
+"nnoremap d "_d
+"vnoremap d "_d
