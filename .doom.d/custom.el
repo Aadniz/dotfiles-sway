@@ -12,4 +12,3 @@
   '(default ((t (:background "#222d3a"))))
   '(hl-line ((t (:background "#222d3a"))))
 )
-
