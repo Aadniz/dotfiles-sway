@@ -30,11 +30,11 @@ seat seat0 xcursor_theme oreo_white_cursors 48
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 exec swayidle -w \
-         timeout 600 "swaylock -f -c 000000 --line-color \\$color0 --ring-color \\$color0 --key-hl-color \\$color1" \
+         timeout 600 "swaylock-corrupter -f -c 000000 --line-color \\$color0 --ring-color \\$color0 --key-hl-color \\$color1 --inside-color \\$color1" \
          timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep "swaylock -f -c 000000 --line-color \\$color0 --ring-color \\$color0 --key-hl-color \\$color1"
+         before-sleep "swaylock-corrupter -f -c 000000 --line-color \\$color0 --ring-color \\$color0 --key-hl-color \\$color1 --inside-color \\$color1"
 
-bindsym $mod+Backspace exec swaylock -f -c "000000" --line-color "$color0" --ring-color "$color0" --key-hl-color "$color1"
+bindsym $mod+Backspace exec swaylock-corrupter -f -c "000000" --line-color "$color0" --ring-color "$color0" --key-hl-color "$color1 --inside-color \\$color1"
 
 # tha hardware stuff
 include hardware.conf
@@ -270,10 +270,10 @@ bindsym $mod+r mode "resize"
 	for_window [class="code-oss"]					floating enable
 	for_window [window_role="toolbox"]              floating enable
 	for_window [window_role="pop-up"]				floating enable
-	for_window [instance="Toolkit"] 				floating enable
+	for_window [instance="Toolkit"]					floating enable
 	for_window [app_id="org.kde.dolphin"]           floating enable
 	for_window [app_id="org.gnome.Nautilus"]        floating enable
-	for_window [app_id="com.obsproject.Studio"] 	floating enable
+	for_window [app_id="com.obsproject.Studio"]		floating enable
 	for_window [class="obs"]						floating enable
 	for_window [app_id="subl"]						floating enable
 	for_window [app_id="org.kde.gwenview"]			floating enable
@@ -282,7 +282,9 @@ bindsym $mod+r mode "resize"
 	for_window [app_id="deluge"]					floating enable
 	for_window [app_id="electrum"]					floating enable
 	for_window [app_id="org.getmonero.monero-wallet-gui"] floating enable
+	for_window [app_id="transmission-gtk"]			floating enable
 	for_window [class="Week 39"]					floating enable
+	for_window [app_id="zoom"]						floating enable
 
 #
 # Status Bar:
