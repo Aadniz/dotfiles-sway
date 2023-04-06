@@ -13,3 +13,4 @@ rsync -avrtL ~/.config/dunstrc .
 rsync -avrtL ~/.config/rofi .
 rsync -avrtL ~/.doom.d .
 rsync -avrtL ~/.config/nvim .
+rsync -avrtL ~/.zshrc .
