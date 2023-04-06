@@ -13,6 +13,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit snippet https://gist.githubusercontent.com/hightemp/5071909/raw/
 
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history #histfile
 HISTSIZE=10000
@@ -33,6 +34,8 @@ bindkey  "^[[F"   end-of-line
 bindkey  "^[[3~"  delete-char
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
 
 
 # Completion for kitty
