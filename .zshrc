@@ -6,12 +6,16 @@ zstyle :compinstall filename '$HOME/.zshrc'
 autoload -Uz compinit
 compinit
 
-## Plugins ##
+## PLUGINS ##
 zinit light trapd00r/LS_COLORS
 zinit load zdharma-continuum/history-search-multi-word
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit snippet https://gist.githubusercontent.com/hightemp/5071909/raw/
+
+## INCLUDES ##
+source $HOME/.zsh_include/git/git.zsh
+source $HOME/.zsh_include/themes/agnoster.zsh-theme
 
 
 # Lines configured by zsh-newuser-install
@@ -57,9 +61,30 @@ export R_PROFILE=~/.Rprofile
 
 ## PROMPT ##
 # https://i.pinimg.com/originals/71/fc/88/71fc88a521c1a0c67768b15e79fb46c9.jpg
-# #3484B7
-# #0A1934
-# #87C2C0
-# #53B1CD
-# #274E5B
-PS1="%K{#f5b6ac}%F{231} 無名 %K{#536988}%F{#f5b6ac}%K{#536988}%F{#f5b6ac} %~ %k%F{#536988}%f " # shell prompt
+# #f5b6ac
+# #222d3a
+# #C2A4B4
+# #495B7A
+# #536988
+# #7A85AA
+
+## Main prompt
+build_prompt() {
+  RETVAL=$?
+  prompt_status
+  prompt_virtualenv
+  prompt_aws
+  prompt_context
+  prompt_dir
+  prompt_git
+  prompt_bzr
+  prompt_hg
+  prompt_end
+}
+
+precmd() {
+  PROMPT="$(build_prompt) "
+  #PROMPT="%K{#f5b6ac}%F{231} 無名 %K{#536988}%F{#f5b6ac}%K{#536988}%F{#f5b6ac} %~ %k%F{#536988}${THEME_PROMPT} "
+}
+
+PS1="ahhhhhhHHHHHHHHHHHHHHHHHH!!" # shell prompt

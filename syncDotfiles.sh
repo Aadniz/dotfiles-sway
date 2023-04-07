@@ -14,3 +14,4 @@ rsync -avrtL ~/.config/rofi .
 rsync -avrtL ~/.doom.d .
 rsync -avrtL ~/.config/nvim .
 rsync -avrtL ~/.zshrc .
+rsync -avrtL ~/.zsh_include .
