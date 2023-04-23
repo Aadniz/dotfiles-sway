@@ -11,7 +11,5 @@ rsync -avrtL ~/.config/kitty .
 rsync -avrtL ~/.config/nano .
 rsync -avrtL ~/.config/dunstrc .
 rsync -avrtL ~/.config/rofi .
-rsync -avrtL ~/.doom.d .
+rsync -avrtL --exclude 'sensitive.el' ~/.config/doom .
 rsync -avrtL ~/.config/nvim .
-rsync -avrtL ~/.zshrc .
-rsync -avrtL ~/.zsh_include .
