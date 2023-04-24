@@ -4,11 +4,6 @@
 ;; sync' after modifying this file!
 
 
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-(setq user-full-name "Chiya"
-      user-mail-address "pus@null.net")
-
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -75,6 +70,13 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented
 
+
 ;; Loading sensitive info
+;; Put this in the sensitive.el file
+;; (setq jiralib-url "https://jirainstance.com/jira")
+;; (setq jiralib-user-login-name "yourmail@example.com")
+;; (setq jiralib-user "Your Name")
+;; (setq jiralib-token `("Authorization" . ,(concat "Bearer asdfadfasdfasdfasdfasdf")))
+;; (setq org-jira-working-dir "~/Documents/org/jira/")
 (when (file-exists-p (expand-file-name "sensitive.el" doom-private-dir))
   (load-file (expand-file-name "sensitive.el" doom-private-dir)))
