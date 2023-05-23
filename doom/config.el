@@ -70,6 +70,11 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented
 
+;; For some reason we needed to add this here
+(require 'tramp)
+(setq tramp-connection-timeout 15)
+
+;; Keybindings
 
 ;; Loading sensitive info
 ;; Put this in the sensitive.el file

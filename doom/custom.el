@@ -11,3 +11,61 @@
       (message "Org files synced successfully"))))
 (add-hook 'after-save-hook #'sync-to-unison)
 (add-hook 'find-file-hook #'sync-to-unison)
+
+;; Something openAI wanted
+(defun org-extend-today-until (hour)
+  "Extend the current date until the given hour of the day."
+  (let* ((hour (string-to-number (car (split-string hour ":"))))
+         (now (decode-time))
+         (date (list (nth 4 now) (nth 3 now) (nth 5 now)))
+         (time (encode-time 0 0 hour (nth 2 now) (nth 1 now) (nth 0 now))))
+    (when (time-less-p (current-time) time)
+      (setq date (time-add date (* 24 60 60))))
+    (setq time (encode-time 0 0 hour (nth 2 now) (nth 1 now) (nth 0 now)))
+    (org-time-stamp time t)))
+
+;; Custom latex pdf exporter for org-mode
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+             '("org-plain-latex"
+               "\\documentclass{article}
+           [NO-DEFAULT-PACKAGES]
+           [PACKAGES]
+           [EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+;; If #+EXPORT: <mode> is defined within the document, it will recognize that as a way to compile the org file.
+;; Example:
+;;   #+EXPORT: org-latex-export-to-pdf
+(defun get-export-function ()
+  (when (derived-mode-p 'org-mode)
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward "^#\\+EXPORT_DISPATCH: \\(.*\\)" nil t)
+        (let ((export-function (intern (match-string 1))))
+          (when (fboundp export-function)
+            export-function))))))
+
+(defun auto-refresh-export ()
+  (let ((export-function (get-export-function)))
+    (if export-function
+        (local-set-key (kbd "<f5>") export-function)
+      (local-unset-key (kbd "<f5>")))))
+
+(defun save-and-export ()
+  (interactive)
+  (let ((export-function (get-export-function)))
+    (when export-function
+      (funcall export-function))))
+
+;; Hook save and F5 to export dispatch
+(add-hook 'buffer-list-update-hook 'auto-refresh-export)
+(add-hook 'before-save-hook 'save-and-export)
+
+;; Auto update PDF files
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+(add-hook 'pdf-view-mode-hook 'auto-revert-mode) ;; <- This does not work for some reason?

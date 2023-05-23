@@ -286,6 +286,8 @@ bindsym $mod+r mode "resize"
 	for_window [class="Week 39"]					floating enable
 	for_window [app_id="zoom"]						floating enable
 	for_window [app_id="Waydroid"]					floating enable
+    for_window [app_id="lutris"]                    floating enable
+    for_window [app_id="zenity"]                    floating enable
 	for_window [class="Microsoft-edge-dev"]			floating enable, resize set 1200 px 1300 px
 	for_window [app_id="anki"]						floating enable, resize set 1400 px 1000 px
 
