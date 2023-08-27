@@ -32,6 +32,7 @@ AUDIO_MUTED_SYMBOL=' '
 
 AUDIO_INTERVAL=1
 
+ICON_COLOR="$color1"
 DEFAULT_COLOR="$color15"
 #DEFAULT_COLOR="#FFFFFF"
 MUTED_COLOR="$color8"
@@ -72,7 +73,7 @@ function move_sinks_to_new_default {
 function print_format {
 	[[ $USE_PERCENT == 0 ]] && PERCENT=""
 	case "$1" in
-		1) echo "$SYMBOL$VOL$PERCENT" ;;
+		1) echo "<span color=\"$ICON_COLOR\">$SYMBOL</span> $VOL$PERCENT" ;;
 		2) echo "$SYMBOL$VOL$PERCENT";;
 		3) echo "$SYMBOL$VOL$PERCENT" ;;
 		*) echo "$SYMBOL$VOL$PERCENT" ;;
@@ -98,7 +99,7 @@ function print_block {
 	if [[ $MUTED =~ "false" ]] ; then
 		SYMBOL=$AUDIO_HIGH_SYMBOL
 		COLOR=$DEFAULT_COLOR
-		[[ ${VOL/\%/} -ge $AUDIO_HIGHEST_THRESH ]] && COLOR=$AUDIO_HIGHEST_COLOR
+		[[ ${VOL/\%/} -ge $AUDIO_HIGHEST_THRESH ]] && COLOR=$AUDIO_HIGHEST_COLOR && ICON_COLOR=$AUDIO_HIGHEST_COLOR
 		#[[ ${VOL/\%/} -gt $AUDIO_HIGHER_THRESH ]] && COLOR=$AUDIO_HIGHER_COLOR
 		[[ ${VOL/\%/} -lt $AUDIO_MED_HIGH_THRESH ]] && SYMBOL=$AUDIO_MED_HIGH_SYMBOL
 		[[ ${VOL/\%/} -lt $AUDIO_MED_THRESH ]] && SYMBOL=$AUDIO_MED_SYMBOL
@@ -106,6 +107,7 @@ function print_block {
 	else
 		SYMBOL=$AUDIO_MUTED_SYMBOL
 		COLOR=$MUTED_COLOR
+		ICON_COLOR=$MUTED_COLOR
 	fi
 
 	if [[ $SUBSCRIBE == 1 ]] ; then

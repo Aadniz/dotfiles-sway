@@ -2,6 +2,9 @@
 
 . $HOME/.cache/wal/colors.sh
 
+ICON_COLOR="$color1"
+COPY_COLOR="$color3"
+
 DAY=$(date '+%u')
 KANJI="月"
 
@@ -16,13 +19,43 @@ case $DAY in
     *) KANJI="なにかへん" ;;
 esac
 
+epoch=$(date '+%s')
+epoch_human_readable=$(echo "$epoch" | sed 's/./&-/3; s/./&-/7')
 
-if [[ $BLOCK_BUTTON ]]; then
-    # Show epoch time when block is clicked
-    date '+%s'
+# Load "memory"
+normal=1
+file_name="/tmp/i3blocks-date-$(echo $epoch | cut -c1-5)"
+if ! test -f "$file_name"; then
+	echo 1 > $file_name;
 else
-    date "+%Y-%m-%d $KANJI %H:%M:%S"
+	output=$(cat "$file_name")
+	if [[ "$output" -ne 0 && "$output" -ne 1 ]]; then
+		echo 1 > $file_name;
+	else
+		normal="$output"
+	fi
 fi
 
-echo
+# Toggle
+if [[ $BLOCK_BUTTON && $BLOCK_BUTTON -eq 1 ]]; then
+	if [[ "$normal" -eq 1 ]]; then
+    	normal=0
+	else
+		normal=1
+	fi
+	echo $normal > $file_name
+fi
+
+# Copy epoch to clipboard
+if [[ $BLOCK_BUTTON && $BLOCK_BUTTON -eq 2 ]]; then
+	echo "<span color=\"$COPY_COLOR\">$KANJI $epoch</span>"
+	echo -n $epoch | wl-copy
+elif [[ "$normal" -eq 1 ]]; then
+	date "+%Y-%m-%d <span color=\"$ICON_COLOR\">$KANJI</span> %H:%M:%S"
+else
+	# Show epoch time when block is clicked
+    echo "<span color=\"$ICON_COLOR\">$KANJI</span> $epoch_human_readable"
+fi
+
+date '+%Y-%m-%d'
 echo "$color16"

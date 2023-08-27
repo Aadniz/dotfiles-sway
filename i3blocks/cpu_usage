@@ -13,6 +13,8 @@ label="${LABEL:-}"
 color_normal="${COLOR_NORMAL:-$color15}"
 color_warn="${COLOR_WARN:-$color3}"
 color_crit="${COLOR_CRIT:-#FF0000}"
+icon_color="${COLOR_ICON:-$color1}"
+color="$color_normal"
 spacer=""
 
 
@@ -32,19 +34,20 @@ elif [[ 0 -le $cpu_usage && $cpu_usage -lt 10 ]]; then
     spacer="  "
 fi
 
-# Print short_text, full_text
-printf "${label}"
-printf "%.${decimals}f%%${spacer}\n" "$cpu_usage"
-printf "${label}"
-printf "%.${decimals}f%%\n" "$cpu_usage"
 
-# Print color, if needed
 if [[ cpu_usage -ge t_crit ]]; then
-    echo "${color_crit}"
+    color="$color_crit"
+	icon_color="$color_crit"
 elif [[ cpu_usage -ge t_warn ]]; then
-    echo "${color_warn}"
-else
-    echo "${color_normal}"
+    color="$color_warn"
+	icon_color="$color_warn"
 fi
+
+# Print short_text, full_text
+printf "<span color=\"$icon_color\">${label}</span>"
+printf "%.${decimals}f%%${spacer}\n" "$cpu_usage"
+printf "<span color=\"$icon_color\">${label}</span>"
+printf "%.${decimals}f%%\n" "$cpu_usage"
+echo "$color"
 
 exit 0

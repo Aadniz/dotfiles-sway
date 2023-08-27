@@ -19,11 +19,13 @@
 TYPE="${BLOCK_INSTANCE:-mem}"
 PERCENT="${PERCENT:-true}"
 
+LABEL="${LABEL:-}"
+ICON_COLOR="$color1"
 HIGH_COLOR="#FF0000"
 MED_COLOR="$color3"
 DEFAULT_COLOR="$color15"
 
-awk -v type=$TYPE -v high_color=$HIGH_COLOR -v med_color=$MED_COLOR -v default_color=$DEFAULT_COLOR  -v percent=$PERCENT '
+awk -v type=$TYPE -v high_color=$HIGH_COLOR -v med_color=$MED_COLOR -v default_color=$DEFAULT_COLOR -v icon_color=$ICON_COLOR -v label=$LABEL -v percent=$PERCENT '
 /^MemTotal:/ {
 	mem_total=$2
 }
@@ -43,6 +45,7 @@ awk -v type=$TYPE -v high_color=$HIGH_COLOR -v med_color=$MED_COLOR -v default_c
 	swap_free=$2
 }
 END {
+	color=default_color
 	if (type == "swap") {
 		free=swap_free/1024/1024
 		used=(swap_total-swap_free)/1024/1024
@@ -58,11 +61,19 @@ END {
 		pct=used/total*100
 	}
 
+	if (pct > 90) {
+        color=high_color
+		icon_color=high_color
+    } else if (pct > 70) {
+        color=med_color
+		icon_color=med_color
+    }
+
 	# full text
 	if (percent == "true" ) {
 		#printf("%.1fG/%.1fG (%.f%%)\n", used, total, pct)
         #printf("%.1fG/%.1fG\n", used, total)
-        printf("%.1fG\n", used)
+        printf("<span color=\"%s\">%s</span> %.1fG\n", icon_color, label, used)
 	} else {
 		#printf("%.1fG/%.1fG\n", used, total)
 	}
@@ -70,12 +81,6 @@ END {
 	printf("%.f%%\n", pct)
 
 	# color
-	if (pct > 90) {
-		print(high_color)
-	} else if (pct > 70) {
-		print(med_color)
-	} else {
-		print(default_color)
-	}
+	print(color)
 }
 ' /proc/meminfo

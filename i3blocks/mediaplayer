@@ -137,6 +137,11 @@ sub mpd {
 sub playerctl {
     buttons('playerctl');
 
+	my $status = qx(playerctl $player_arg status);
+	chomp $status;
+
+	exit(0) if $? || $status ne "Playing";
+
     my $artist = qx(playerctl $player_arg metadata artist 2>/dev/null);
     chomp $artist;
     # exit status will be nonzero when playerctl cannot find your player
@@ -145,11 +150,19 @@ sub playerctl {
     push(@metadata, $artist) if $artist;
 
     my $title = qx(playerctl $player_arg metadata title);
+	chomp $title;
     exit(0) if $? || $title eq '(null)';
 
     push(@metadata, $title) if $title;
 
-    print("$label ", join(" - ", @metadata)) if @metadata;
+	my $shuffle = qx(playerctl $player_arg shuffle); # eq "On" ? "  " : "";
+	chomp $shuffle;
+	my $shuffle_icon = "";
+	if ($shuffle eq "On") {
+		$shuffle_icon = "  <span color='#a79fa1'></span>"
+	}
+
+    print("<span color='#f5b6ac'>$label</span>  ", join(" - ", @metadata), "$shuffle_icon\n") if @metadata;
 }
 
 sub rhythmbox {
