@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  	if fcitx5-remote -n | grep -q no; then
+  		#switch to japanese
+		fcitx5-remote -o
+	elif fcitx5-remote -n | grep -q mozc; then
+		#switch to Norwegian
+		fcitx5-remote -c
+	fi
+fi
+
+if fcitx5-remote -n | grep -q no; then
+	echo "NO"
+elif fcitx5-remote -n | grep -q mozc; then
+	echo "JP"
+fi

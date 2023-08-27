@@ -1,0 +1,28 @@
+#!/bin/bash
+
+. $HOME/.cache/wal/colors.sh
+
+DAY=$(date '+%u')
+KANJI="月"
+
+case $DAY in
+    1) KANJI="月" ;;
+    2) KANJI="火" ;;
+    3) KANJI="水" ;;
+    4) KANJI="木" ;;
+    5) KANJI="金" ;;
+    6) KANJI="土" ;;
+    7) KANJI="日" ;;
+    *) KANJI="なにかへん" ;;
+esac
+
+
+if [[ $BLOCK_BUTTON ]]; then
+    # Show epoch time when block is clicked
+    date '+%s'
+else
+    date "+%Y-%m-%d $KANJI %H:%M:%S"
+fi
+
+echo
+echo "$color16"

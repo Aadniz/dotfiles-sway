@@ -69,3 +69,6 @@
 ;; Auto update PDF files
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (add-hook 'pdf-view-mode-hook 'auto-revert-mode) ;; <- This does not work for some reason?
+
+;; Move around split windowses
+(windmove-default-keybindings)

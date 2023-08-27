@@ -13,3 +13,4 @@ rsync -avrtL ~/.config/dunstrc .
 rsync -avrtL ~/.config/rofi .
 rsync -avrtL --exclude 'sensitive.el' ~/.config/doom .
 rsync -avrtL ~/.config/nvim .
+rsync -avrtL ~/.config/i3blocks .

@@ -71,10 +71,9 @@ include hardware.conf
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
 	# Volume control
-	exec pactl set-sink-volume @DEFAULT_SINK@ 100%
-	bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-	bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
-	bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+	bindsym --locked XF86AudioMute exec pamixer -t && pkill -RTMIN+1 i3blocks
+	bindsym --locked XF86AudioLowerVolume exec pamixer -d 1 && pkill -RTMIN+1 i3blocks
+	bindsym --locked XF86AudioRaiseVolume exec pamixer -i 1 && pkill -RTMIN+1 i3blocks
 	bindsym XF86AudioPlay exec playerctl play-pause
 	bindsym XF86AudioNext exec playerctl next
 	bindsym XF86AudioPrev exec playerctl previous
@@ -178,48 +177,6 @@ client.urgent           $color3 $color3 $color0 $color3
     bindsym $mod+minus scratchpad show
 
 #
-# Live gaps adjustments
-#
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-bindsym $mod+w mode "$mode_gaps"
-
-mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+w mode "default"
-}
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "$mode_gaps"
-        bindsym $mod+w mode "default"
-}
-mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
-
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "$mode_gaps"
-        bindsym $mod+w mode "default"
-}
-
-#
 # Resizing containers:
 #
 mode "resize" {
@@ -290,18 +247,23 @@ bindsym $mod+r mode "resize"
     for_window [app_id="zenity"]                    floating enable
 	for_window [class="Microsoft-edge-dev"]			floating enable, resize set 1200 px 1300 px
 	for_window [app_id="anki"]						floating enable, resize set 1400 px 1000 px
+    for_window [class="Qemu-system-i386"]           floating enable
 
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-	 position top
+	position top
 
 	# When the status_command prints a new line to stdout, swaybar updates.
 	# The default just shows the current date and time.
+	font pango: Cousine Nerd Font, Font Awesome 6 Pro Solid, Noto Sans 12
+	icon_theme Papirus-Dark
+
 	#status_command while date +'%Y-%m-%d %H:%M:%S'; do sleep 1; done
-	status_command while bash $HOME/.config/sway/status_output.sh; do sleep 1; done
+	#status_command while bash $HOME/.config/sway/status_output.sh; do sleep 1; done
+	status_command i3blocks -c $HOME/.config/i3blocks/i3blocks.conf
 
 	colors {
 		statusline #ffffff

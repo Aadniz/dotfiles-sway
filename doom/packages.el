@@ -51,4 +51,3 @@
 
 ;; Jira
 (package! org-jira)
-
