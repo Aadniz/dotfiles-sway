@@ -162,7 +162,13 @@ sub playerctl {
 		$shuffle_icon = "  <span color='#a79fa1'></span>"
 	}
 
-    print("<span color='#f5b6ac'>$label</span>  ", join(" - ", @metadata), "$shuffle_icon\n") if @metadata;
+    if (@metadata){
+        my $details = join(" - ", @metadata);
+        $details =~ s/&/&amp;/g;
+        print("<span color='#f5b6ac'>$label</span>  ", "$details", "$shuffle_icon\n");
+    } else{
+        exit(0)
+    }
 }
 
 sub rhythmbox {
