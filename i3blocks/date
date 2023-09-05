@@ -58,4 +58,4 @@ else
 fi
 
 date '+%Y-%m-%d'
-echo "$color16"
+echo "$color15"

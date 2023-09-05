@@ -46,9 +46,11 @@ if ($BLOCK_INSTANCE) {
     $player_arg = "--player='$BLOCK_INSTANCE'";
 
     if ($label_set == False){
-        if ($BLOCK_INSTANCE == "spotify"){
+        if ($BLOCK_INSTANCE eq "spotify"){
             $label = "";
-        }
+        }elsif ($BLOCK_INSTANCE eq "elisa") {
+			$label = "";
+		}
     }
 }
 
@@ -85,9 +87,9 @@ sub buttons {
             system("playerctl $player_arg next");
             usleep(DELAY * 1000) if $BLOCK_INSTANCE eq SPOTIFY_STR;
         } elsif ($ENV{'BLOCK_BUTTON'} == 4) {
-            system("playerctl $player_arg volume 0.01+");
+            system("playerctl $player_arg volume 0.1+");
         } elsif ($ENV{'BLOCK_BUTTON'} == 5) {
-            system("playerctl $player_arg volume 0.01-");
+            system("playerctl $player_arg volume 0.1-");
         }
     } elsif ($method eq 'rhythmbox') {
         if ($ENV{'BLOCK_BUTTON'} == 1) {

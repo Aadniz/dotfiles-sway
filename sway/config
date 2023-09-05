@@ -74,9 +74,9 @@ include hardware.conf
 	bindsym --locked XF86AudioMute exec pamixer -t && pkill -RTMIN+1 i3blocks
 	bindsym --locked XF86AudioLowerVolume exec pamixer -d 1 && pkill -RTMIN+1 i3blocks
 	bindsym --locked XF86AudioRaiseVolume exec pamixer -i 1 && pkill -RTMIN+1 i3blocks
-	bindsym XF86AudioPlay exec playerctl play-pause
-	bindsym XF86AudioNext exec playerctl next
-	bindsym XF86AudioPrev exec playerctl previous
+	bindsym XF86AudioPlay exec playerctl play-pause && pkill -RTMIN+10 i3blocks
+    bindsym XF86AudioNext exec playerctl next && pkill -RTMIN+10 i3blocks
+    bindsym XF86AudioPrev exec playerctl previous && pkill -RTMIN+10 i3blocks
 #
 # Moving around:
 #

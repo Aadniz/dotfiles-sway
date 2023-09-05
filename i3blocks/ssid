@@ -1,10 +1,15 @@
 #!/bin/bash
 
+
+# Sourcing the colors
+. $HOME/.cache/wal/colors.sh
+
+
 SSID_NAME=$(nmcli con show --active | grep wifi | awk '{print $1}')
 
-DEFAULT_COLOR=${DEFAULT_COLOR:-"#d2dadd"}
+DEFAULT_COLOR=${DEFAULT_COLOR:-"$color15"}
 MUTED_COLOR=${MUTED_COLOR:-"#a89984"}
-
+ICON_COLOR=${ICON_COLOR:-"$color1"}
 
 # You can put any urgent name so the block will give warning
 # if a network with this name is used, like public wifi or alike.
@@ -12,18 +17,18 @@ MUTED_COLOR=${MUTED_COLOR:-"#a89984"}
 URGENT_VALUE=""
 
 case $BLOCK_BUTTON in
-	1) $HOME/.config/rofi/nmcli-rofi ;; # left click
-	2)  ;; # middle click 
-	3)  ;; # right click
+    1) $HOME/.config/rofi/nmcli-rofi ;; # left click
+    2)  ;; # middle click 
+    3)  ;; # right click
 esac
 
 if [[ "${SSID_NAME}" != "" ]]; then
-  echo " ${SSID_NAME}"
-  echo " ${SSID_NAME}"
+  echo "<span color=\"$ICON_COLOR\"></span>  ${SSID_NAME}"
+  echo "<span color=\"$ICON_COLOR\"></span>  ${SSID_NAME}"
   echo "$DEFAULT_COLOR"
 else
-  echo " no connection"
-  echo " no connection"
+  echo "  no connection"
+  echo "  no connection"
   echo "$MUTED_COLOR"
 
   if [[ "${URGENT_VALUE}" != "" ]] && [[ $(echo "${SSID_NAME}" | grep -we "${URGENT_VALUE}") != "" ]]; then

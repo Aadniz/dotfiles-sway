@@ -88,8 +88,40 @@ function print_block {
 	DESCRIPTION=$(pactl list sinks | grep -B2 -A1 "$NAME$" | grep Description | cut -f2- -d\ )
 	INDEX=$(pactl list sinks | grep -B2 -A1 "$NAME$" | grep Sink | cut -f2 -d\#)
 
-	if [[ $USE_DESCRIPTION == 1 ]]; then
-		NAME="$DESCRIPTION"
+	#if [[ $USE_DESCRIPTION == 1 ]]; then
+	#	NAME="$DESCRIPTION"
+	#fi
+
+	# Stupid but ok sure
+	EXTRA_STUFF=""
+	if [[ $BLOCK_BUTTON && ($BLOCK_BUTTON -eq 1 || $BLOCK_BUTTON -eq 3) ]]; then
+		NAMES=($(pactl list short sinks | awk '{print $2}' | sort))
+
+		# Find the index of the current sink in the NAMES array
+		CURRENT_INDEX=-1
+		for i in "${!NAMES[@]}"; do
+			if [[ "${NAMES[i]}" == "$NAME" ]]; then
+				CURRENT_INDEX=$i
+				break
+			fi
+		done
+
+		# switch to the next sink in the list or the first one if not found
+		if [[ $CURRENT_INDEX -ge 0 ]]; then
+			if [[ $BLOCK_BUTTON -eq 1 ]]; then
+				NEXT_INDEX=$(( (CURRENT_INDEX + 1) % ${#NAMES[@]} ))
+			else
+				NEXT_INDEX=$(( (CURRENT_INDEX - 1 + ${#NAMES[@]}) % ${#NAMES[@]} ))
+			fi
+		else
+			NEXT_INDEX=0
+		fi
+
+		NEXT_SINK="${NAMES[NEXT_INDEX]}"
+
+		# Use pactl command to switch to the next sink
+		pactl set-default-sink "$NEXT_SINK"
+		EXTRA_STUFF=" [$NEXT_SINK]"
 	fi
 
 	[[ $USE_PERCENT == 1 ]] && VOL="$(pamixer --get-volume-human)" || VOL=$(pamixer --get-volume)
@@ -110,14 +142,9 @@ function print_block {
 		ICON_COLOR=$MUTED_COLOR
 	fi
 
-	if [[ $SUBSCRIBE == 1 ]] ; then
-		print_format "$LONG_FORMAT"
-		echo "$COLOR"
-	else
-		print_format "$LONG_FORMAT"
-		print_format "$SHORT_FORMAT"
-		echo "$COLOR"
-	fi
+	echo "<span color=\"$ICON_COLOR\">$SYMBOL</span> $VOL$PERCENT$EXTRA_STUFF"
+	echo "<span color=\"$ICON_COLOR\">$SYMBOL</span> $VOL$PERCENT"
+	echo "$COLOR"
 }
 
 print_block
