@@ -14,3 +14,4 @@ rsync -avrtL ~/.config/rofi .
 rsync -avrtL --exclude 'sensitive.el' ~/.config/doom .
 rsync -avrtL ~/.config/nvim .
 rsync -avrtL ~/.config/i3blocks .
+rsync -avrtL ~/.themes/Catppuccin-Mocha-Standard-Chiya-Dark/ Catppuccin-Mocha-Standard-Custom-Dark

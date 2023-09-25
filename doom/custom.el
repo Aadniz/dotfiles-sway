@@ -71,7 +71,11 @@
 (add-hook 'pdf-view-mode-hook 'auto-revert-mode) ;; <- This does not work for some reason?
 
 ;; Move around split windowses
-(windmove-default-keybindings)
+;; (windmove-default-keybindings)
+
+;; Change window using CTRL + Shift + S
+(global-set-key (kbd "C-S-s") 'other-window)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
