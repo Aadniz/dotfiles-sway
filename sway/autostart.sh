@@ -6,12 +6,13 @@ sleep 2
 ###
 
 # Center monitor
-swaymsg "workspace 1; exec firefox"
+swaymsg "workspace 21; exec firefox"
 
 sleep 1
 # Top monitor
 swaymsg "workspace 9; exec radeon-profile"
 swaymsg "workspace 1; exec kitty --session /home/chiya/.config/kitty/session.conf"
+swaymsg "exec kitty"
 
 sleep 1
 # Left monitor
