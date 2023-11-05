@@ -248,6 +248,7 @@ bindsym $mod+r mode "resize"
 	for_window [class="Microsoft-edge-dev"]			floating enable, resize set 1200 px 1300 px
 	for_window [app_id="anki"]						floating enable, resize set 1400 px 1000 px
     for_window [class="Qemu-system-i386"]           floating enable
+	for_window [title="Developer Tools —"]			floating enable
 
 #
 # Status Bar:

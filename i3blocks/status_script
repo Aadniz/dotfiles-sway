@@ -1,30 +1,68 @@
 #!/bin/python
 
 import os
+import zmq
 import json
 import subprocess
+import random
 
-STATUS_SCRIPT_PATH = os.path.expanduser("~/RustroverProjects/status/run")
+PROTOCOL = "tcp"
+HOST = "127.0.0.1"
+PORT = 5747
 
 # Load the colors from wal
 with open(os.path.expanduser("~/.cache/wal/colors.json"), "r") as f:
     color_data = json.load(f)
 
 highlight_color = color_data["colors"]["color1"]
-#highlight_color = color_data["colors"]["color15"]
+loading_color = color_data["colors"]["color2"]
+white_color = color_data["colors"]["color15"]
 error_color = "#FF0000"
 
 
 # Now for communicating with rust
-proc = subprocess.Popen([STATUS_SCRIPT_PATH, "service"], stdout=subprocess.PIPE)
-output, _ = proc.communicate()
-data = json.loads(output)
+# Prepare our context and sockets
+context = zmq.Context()
 
+# Socket to talk to server
+socket = context.socket(zmq.DEALER)
+socket.connect(f"{PROTOCOL}://{HOST}:{PORT}")
+
+# Send request
+socket.send(b"service")
+
+# Get reply
+message = socket.recv_multipart()
+
+# Decode each byte string and join them together
+message_str = "".join(part.decode('utf-8') for part in message)
+
+data = json.loads(message_str)
 
 str_builder = ""
 for service in data:
-    if service["successes"] >= 1.0:
+    full_name = service["name"].upper()
+    # Finding an unmatchable name
+    name = ''.join(random.sample(full_name, len(full_name)))
+
+    # Pick two distinct characters
+    if len(set(name)) > 1:
+        distinct_chars = []
+        for char in name:
+            if char not in distinct_chars:
+                distinct_chars.append(char)
+            if len(distinct_chars) == 2:
+                break
+        name = ''.join(distinct_chars)
+    else:
+        name = name[0]
+
+    if service["result"] == False:
+        str_builder += f'<span color="{loading_color}">I</span>'
+    elif service["successes"] >= 1.0:
         str_builder += f'<span color="{highlight_color}">I</span>'
+    elif service["successes"] > 0.7:
+        str_builder += f'<span color="{white_color}">I</span>'
     else:
         str_builder += f'<span color="{error_color}">I</span>'
 

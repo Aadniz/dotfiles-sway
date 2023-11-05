@@ -38,6 +38,10 @@
 (setq org-directory "~/Documents/org/")
 
 
+;; [[file:config.org::*Custom splash image][Custom splash image:1]]
+(setq fancy-splash-image (expand-file-name "assets/94162119_p0_edited.png" doom-user-dir))
+;; Custom splash image:1 ends here
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
