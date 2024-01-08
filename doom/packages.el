@@ -52,13 +52,5 @@
 ;; Jira
 (package! org-jira)
 
-;; Help pydoc?
-(use-package helm-pydoc
-  :commands helm-pydoc
-  :init
-  (my/leader-keys-major-mode
-    :keymaps 'python-mode-map
-    "hd" 'helm-pydoc))
-
 ;; crdt
 (package! crdt)

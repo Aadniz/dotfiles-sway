@@ -101,6 +101,14 @@ include hardware.conf
     bindsym $mod+Shift+k move up 30px
     bindsym $mod+Shift+l move right 30px
 
+#
+# Control borders
+#
+bindsym --whole-window {
+	$mod+button4 gaps inner current plus 5
+	$mod+button5 gaps inner current minus 5
+}
+
 default_border normal 4
 smart_borders on
 
