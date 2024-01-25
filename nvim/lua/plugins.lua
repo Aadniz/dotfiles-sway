@@ -9,7 +9,7 @@ return require('packer').startup(function()
     use 'Raimondi/delimitMate'  
     use 'junegunn/goyo.vim'  
     use 'vim-pandoc/vim-pandoc'  
-    --Plug 'D3faIt/vim-rest-console'
+    --Plug 'Aadniz/vim-rest-console'
     use 'scrooloose/nerdtree'
     use 'mg979/vim-visual-multi'
 
@@ -21,7 +21,7 @@ return require('packer').startup(function()
     }
 
     -- SCP upload / download
-    use 'D3faIt/Vim-Jetbrains-Deployment'
+    use 'Aadniz/Vim-Jetbrains-Deployment'
 
     -- Autocompletion framework
     --use 'hrsh7th/nvim-cmp'

@@ -39,8 +39,8 @@ Plug 'chrisbra/Colorizer'
 Plug 'Yggdroot/indentLine'
 "Plug 'airblade/vim-gitgutter'
 " My Plugin
-Plug 'D3faIt/Vim-Jetbrains-Deployment'
-Plug 'D3faIt/vim-rest-console'
+Plug 'Aadniz/Vim-Jetbrains-Deployment'
+Plug 'Aadniz/vim-rest-console'
 call plug#end()
 
 " Which Key
