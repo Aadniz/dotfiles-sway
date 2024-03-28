@@ -1,5 +1,11 @@
 #!/bin/bash
 VOLUME=$(pamixer --get-volume)
-#DATE=$(date +'%Y-%m-%d %H:%M:%S')
+ISMUTED=$(pamixer --get-mute)
 DATE=$(~/.config/sway/japtime)
-echo "Volume: $VOLUME   $DATE  "
+BATTERY=$(cat /sys/class/power_supply/BAT0/capacity)
+
+if [ "$ISMUTED" == "true" ]; then
+	VOLUME="mute"
+fi
+
+echo -e "Volume: $VOLUME     $BATTERY   $DATE  "

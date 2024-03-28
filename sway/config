@@ -30,11 +30,11 @@ seat seat0 xcursor_theme oreo_white_cursors 48
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 exec swayidle -w \
-         timeout 600 "swaylock-corrupter -f -c 000000 --line-color \\$color0 --ring-color \\$color0 --key-hl-color \\$color1 --inside-color \\$color1" \
+         timeout 600 "swaylock -f -c 000000 --line-color \\$color0 --ring-color \\$color0 --key-hl-color \\$color1" \
          timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep "swaylock-corrupter -f -c 000000 --line-color \\$color0 --ring-color \\$color0 --key-hl-color \\$color1 --inside-color \\$color1"
+         before-sleep "swaylock -f -c 000000 --line-color \\$color0 --ring-color \\$color0 --key-hl-color \\$color1"
 
-bindsym $mod+Backspace exec swaylock-corrupter -f -c "000000" --line-color "$color0" --ring-color "$color0" --key-hl-color "$color1 --inside-color \\$color1"
+bindsym $mod+Backspace exec swaylock -f -c "000000" --line-color "$color0" --ring-color "$color0" --key-hl-color "$color1"
 
 # tha hardware stuff
 include hardware.conf
@@ -43,12 +43,10 @@ include hardware.conf
 #
 # Basics:
 #
-  # Start a terminal
-	bindsym $mod+Return exec kitty
-	bindsym $mod+KP_Enter exec kitty
+    # Start a terminal
+    bindsym $mod+Return exec kitty
 	bindsym $mod+Ctrl+Return exec kitty --class floatingKitty
-	bindsym $mod+Ctrl+KP_Enter exec kitty --class floatingKitty
-	for_window [app_id="floatingKitty"] floating enable, resize set 1300 px 900 px
+	for_window [app_id="floatingKitty"] floating enable
 
     # Kill focused window
     bindsym $mod+Escape kill
@@ -72,52 +70,43 @@ include hardware.conf
 
 	# Volume control
 	bindsym --locked XF86AudioMute exec pamixer -t && pkill -RTMIN+1 i3blocks
-	bindsym --locked XF86AudioLowerVolume exec pamixer -d 1 && pkill -RTMIN+1 i3blocks
-	bindsym --locked XF86AudioRaiseVolume exec pamixer -i 1 && pkill -RTMIN+1 i3blocks
+        bindsym --locked XF86AudioLowerVolume exec pamixer -d 1 && pkill -RTMIN+1 i3blocks
+        bindsym --locked XF86AudioRaiseVolume exec pamixer -i 1 && pkill -RTMIN+1 i3blocks
 	bindsym XF86AudioPlay exec playerctl play-pause && pkill -RTMIN+10 i3blocks
-    bindsym XF86AudioNext exec playerctl next && pkill -RTMIN+10 i3blocks
-    bindsym XF86AudioPrev exec playerctl previous && pkill -RTMIN+10 i3blocks
+	bindsym XF86AudioNext exec playerctl next && pkill -RTMIN+10 i3blocks
+	bindsym XF86AudioPrev exec playerctl previous && pkill -RTMIN+10 i3blocks
+
+	# Brightness
+	bindsym --locked XF86MonBrightnessUp exec brightnessctl s +5%
+	bindsym --locked XF86MonBrightnessDown exec brightnessctl s 5%-
+
+	# Switch between JP and NO
+	bindsym Ctrl+less exec fcitx5-remote -t && pkill -RTMIN+3 i3blocks
 #
 # Moving around:
 #
     bindsym $mod+Left focus left
-    bindsym $mod+h focus left
     bindsym $mod+Down focus down
-    bindsym $mod+j focus down
     bindsym $mod+Up focus up
-    bindsym $mod+k focus up
     bindsym $mod+Right focus right
-    bindsym $mod+l focus right
 
     # Ditto, with arrow keys
-    bindsym $mod+Shift+Left move left 30px
-    bindsym $mod+Shift+Down move down 30px
-    bindsym $mod+Shift+Up move up 30px
-    bindsym $mod+Shift+Right move right 30px
-
-    # vim like
-    bindsym $mod+Shift+h move left 30px
-    bindsym $mod+Shift+j move down 30px
-    bindsym $mod+Shift+k move up 30px
-    bindsym $mod+Shift+l move right 30px
-
-#
-# Control borders
-#
-bindsym --whole-window {
-	$mod+button4 gaps inner current plus 5
-	$mod+button5 gaps inner current minus 5
-}
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
 
 default_border normal 4
+titlebar_padding 1
 smart_borders on
+font pango:monospace 1
 
 # class                 border  backgr. text    indicator child_border
-client.focused          $color1 $color1 $color0 $color1
-client.unfocused        $color0 $color0 $color8 $color0
-client.focused_inactive $color0 $color0 $color8 $color0
-#client.placeholder     #0F191A #0F191A #909a9d #0F191A
-client.urgent           $color3 $color3 $color0 $color3
+client.focused          $color1 $color1 $color1 $color1
+client.unfocused        $color0 $color0 $color0 $color0
+client.focused_inactive $color0 $color0 $color0 $color0
+#client.placeholder     #0F191A #0F191A #0F191A #0F191A
+client.urgent           $color3 $color3 $color3 $color3
 
 
 #
@@ -147,6 +136,10 @@ client.urgent           $color3 $color3 $color0 $color3
     bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
+
+bindsym $mod+Tab workspace next_on_output
+#workspace_auto_back_and_forth no
+bindsym Alt+Tab workspace back_and_forth
 #
 # Layout stuff:
 #
@@ -155,7 +148,7 @@ client.urgent           $color3 $color3 $color0 $color3
     # respectively.
     bindsym $mod+v splith
     bindsym $mod+c splitv
-    default_orientation auto
+	default_orientation auto
 
     # Switch the current container between different layout styles
     bindsym $mod+s sticky toggle
@@ -167,6 +160,9 @@ client.urgent           $color3 $color3 $color0 $color3
 
     # Toggle the current focus between tiling and floating mode
     bindsym $mod+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+Shift+space focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
@@ -183,7 +179,6 @@ client.urgent           $color3 $color3 $color0 $color3
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
-
 #
 # Resizing containers:
 #
@@ -192,19 +187,11 @@ mode "resize" {
     bindsym Left resize shrink width 10px
     bindsym Down resize grow height 10px
     bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+	bindsym Right resize grow width 10px
 
-    # vim like
-    bindsym h resize shrink width 10px
-    bindsym j resize grow height 10px
-    bindsym k resize shrink height 10px
-    bindsym l resize grow width 10px
-    
     # Return to default mode
     bindsym Return mode "default"
-	bindsym KP_Enter mode "default"
     bindsym Escape mode "default"
-	bindsym $mod+r mode "default"
 }
 bindsym $mod+r mode "resize"
 
@@ -219,27 +206,24 @@ bindsym $mod+r mode "resize"
 	bindsym Print exec wl-copy < $(grimshot save area "$HOME/Pictures/Shutter/Screenshot_$(date +%Y-%m-%d_%H:%M:%S).png")
 	bindsym Shift+Print exec grimshot --notify copy area
 	bindsym Ctrl+Print exec grimshot --notify copy output
-	bindsym Ctrl+Shift+Print exec wl-copy < $(grimshot --notify save output "$HOME/Pictures/Shutter/Screenshot_$(date +%Y-%m-%d_%H:%M:%S).png")
 	bindsym $mod+Print exec wl-copy < $(grimshot --notify save screen "$HOME/Pictures/Shutter/Screenshot_$(date +%Y-%m-%d_%H:%M:%S).png")
 	bindsym Mod1+Print exec wl-copy < $(grimshot --notify save active "$HOME/Pictures/Shutter/Screenshot_$(date +%Y-%m-%d_%H:%M:%S).png")
+        bindsym $mod+Bar exec color-picker
 
 	# Floating stuff
 	#floating_maximum_size 2560 x 1440 # Would like to hint the size, not force it
-	floating_minimum_size 250 x 100
+	floating_minimum_size 250 x 70
 	for_window [class="Vlc"]						floating enable
 	for_window [class="vlc"]                        floating enable
 	for_window [class="feh"]						floating enable
 	for_window [class="Insomnia"]					floating enable
 	for_window [class="Steam"]						floating enable
 	for_window [class="Mario spel"]					floating enable
-	for_window [class="code-oss"]					floating enable
 	for_window [window_role="toolbox"]              floating enable
-	for_window [window_role="pop-up"]				floating enable
 	for_window [instance="Toolkit"]					floating enable
 	for_window [app_id="org.kde.dolphin"]           floating enable
 	for_window [app_id="org.gnome.Nautilus"]        floating enable
 	for_window [app_id="com.obsproject.Studio"]		floating enable
-	for_window [class="obs"]						floating enable
 	for_window [app_id="subl"]						floating enable
 	for_window [app_id="org.kde.gwenview"]			floating enable
 	for_window [app_id="radeon-profile"]			floating enable
@@ -247,27 +231,28 @@ bindsym $mod+r mode "resize"
 	for_window [app_id="deluge"]					floating enable
 	for_window [app_id="electrum"]					floating enable
 	for_window [app_id="org.getmonero.monero-wallet-gui"] floating enable
-	for_window [app_id="transmission-gtk"]			floating enable
-	for_window [class="Week 39"]					floating enable
-	for_window [app_id="zoom"]						floating enable
-	for_window [app_id="Waydroid"]					floating enable
+	for_window [app_id="transmission-gtk"]          floating enable
+    for_window [class="Week 39"]                    floating enable
+    for_window [app_id="zoom"]                      floating enable
+    for_window [app_id="Waydroid"]                  floating enable
     for_window [app_id="lutris"]                    floating enable
     for_window [app_id="zenity"]                    floating enable
-	for_window [class="Microsoft-edge-dev"]			floating enable, resize set 1200 px 1300 px
-	for_window [app_id="anki"]						floating enable, resize set 1400 px 1000 px
-    for_window [class="Qemu-system-i386"]           floating enable
-	for_window [title="Developer Tools —"]			floating enable
+    for_window [class="Microsoft-edge"]             floating enable, resize set 1200 px 1300 px
+    for_window [app_id="anki"]                      floating enable, resize set 1400 px 1000 px
+    for_window [instance="Godot_ProjectList"]       floating enable
+    for_window [instance="Godot_Engine"]            floating enable
+    for_window [class="Godot"]                      floating enable
 
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-	position top
+	 position top
 
 	# When the status_command prints a new line to stdout, swaybar updates.
 	# The default just shows the current date and time.
-	font pango: Noto Sans CJK JP, Cousine Nerd Font, Font Awesome 6 Pro Solid, Noto Sans 12
+	font pango: Cousine Nerd Font, Font Awesome 6 Pro Solid, Noto Sans 10
 	icon_theme Papirus-Dark
 
 	#status_command while date +'%Y-%m-%d %H:%M:%S'; do sleep 1; done
@@ -285,7 +270,7 @@ bar {
 }
 
 # swaysome
-include swaysome
+# include swaysome
 
 # Applications to autostart
 include autostart.conf
