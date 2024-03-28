@@ -7,6 +7,7 @@ return require('packer').startup(function()
     use 'patstockwell/vim-monokai-tasty'
     use 'ncm2/ncm2'  
     use 'Raimondi/delimitMate'  
+    use 'plasticboy/vim-markdown'  
     use 'junegunn/goyo.vim'  
     use 'vim-pandoc/vim-pandoc'  
     --Plug 'Aadniz/vim-rest-console'
@@ -19,9 +20,6 @@ return require('packer').startup(function()
     use {
       'neoclide/coc.nvim', branch = 'release'
     }
-
-    -- SCP upload / download
-    use 'Aadniz/Vim-Jetbrains-Deployment'
 
     -- Autocompletion framework
     --use 'hrsh7th/nvim-cmp'
@@ -45,14 +43,6 @@ return require('packer').startup(function()
 
     -- Show indents
     use "lukas-reineke/indent-blankline.nvim"
-
-    -- vimtex
-    use 'lervag/vimtex'
-
-    -- Markdown
-    use 'SidOfc/mkdx'
-    use {"ellisonleao/glow.nvim"}
-    --use 'plasticboy/vim-markdown'  
 
     use {
       'nvim-lualine/lualine.nvim',

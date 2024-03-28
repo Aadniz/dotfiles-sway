@@ -14,16 +14,16 @@ local function smap(m, k, v)
 end
 
 -- Treat all .md files as markdown
-vim.cmd('autocmd BufNewFile,BufRead *.md set filetype=markdown')
+--autocmd BufNewFile,BufRead *.md set filetype=markdown
 
 -- Highlight the line the cursor is on
-vim.cmd('autocmd FileType markdown set cursorline')
+--autocmd FileType markdown set cursorline
 
 -- Hide and format markdown elements like **bold**
-vim.cmd('autocmd FileType markdown set conceallevel=2')
+--autocmd FileType markdown set conceallevel=2
 
--- Omg jeg er så norsk!!!
--- vim.cmd('autocmd FileType markdown setlocal spell spelllang=nb')
+-- Set spell check to British English
+--autocmd FileType markdown setlocal spell spelllang=nb
 
 --autocmd FileType markdown imap <C-O> <Esc>:w<CR><Esc>:Pandoc pdf<CR>
 --autocmd FileType markdown map <C-O> <Esc>:w<CR><Esc>:Pandoc pdf<CR>
@@ -42,27 +42,20 @@ smap("n", "<C-e>", '<Esc>:NERDTreeToggle<CR>')
 smap("i", "<C-e>", '<Esc>:NERDTreeToggle<CR>')
 
 -- Configuration for vim-markdown
---vim.g.vim_markdown_conceal = 2
---vim.g.vim_markdown_conceal_code_blocks = 0
---vim.g.vim_markdown_math = 1
---vim.g.vim_markdown_toml_frontmatter = 1
---vim.g.vim_markdown_frontmatter = 1
---vim.g.vim_markdown_strikethrough = 1
---vim.g.vim_markdown_autowrite = 1
---vim.g.vim_markdown_edit_url_in = 'tab'
---vim.g.vim_markdown_follow_anchor = 1
+vim.g.vim_markdown_conceal = 2
+vim.g.vim_markdown_conceal_code_blocks = 0
+vim.g.vim_markdown_math = 1
+vim.g.vim_markdown_toml_frontmatter = 1
+vim.g.vim_markdown_frontmatter = 1
+vim.g.vim_markdown_strikethrough = 1
+vim.g.vim_markdown_autowrite = 1
+vim.g.vim_markdown_edit_url_in = 'tab'
+vim.g.vim_markdown_follow_anchor = 1
 
 -- Rest VIM
 vim.g.vrc_elasticsearch_support = 1
 vim.g.vrc_syntax_highlight_response = 1
 vim.g.vrc_output_buffer_name = '__VRC_OUTPUT.json'
-
--- Vimtex config
-vim.g.tex_flavor = 'latex'
-vim.g.vimtex_view_method = 'zathura'
-vim.g.vimtex_quickfix_mode = 0
-vim.g.tex_conceal = 'abdmgs'
-vim.g.indentLine_setConceal = 0
 
 -- Neovide
 require('neovide')
@@ -167,5 +160,3 @@ smap("n", "<C-l>", "<C-w>l")
 
 -- prevent cut
 --nnoremap d "_d
-
-

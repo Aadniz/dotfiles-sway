@@ -1,4 +1,6 @@
 require('lspconfig').rust_analyzer.setup{}
+require('lspconfig').cmake.setup{}
+require('lspconfig').clangd.setup{}
 
 local opts = {
     tools = {
