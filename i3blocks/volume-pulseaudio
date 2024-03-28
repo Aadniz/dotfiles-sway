@@ -73,7 +73,7 @@ function move_sinks_to_new_default {
 function print_format {
 	[[ $USE_PERCENT == 0 ]] && PERCENT=""
 	case "$1" in
-		1) echo "<span color=\"$ICON_COLOR\">$SYMBOL</span> $VOL$PERCENT" ;;
+		1) echo "<span color=\"$ICON_COLOR\">$SYMBOL</span>$VOL$PERCENT" ;;
 		2) echo "$SYMBOL$VOL$PERCENT";;
 		3) echo "$SYMBOL$VOL$PERCENT" ;;
 		*) echo "$SYMBOL$VOL$PERCENT" ;;
@@ -142,8 +142,8 @@ function print_block {
 		ICON_COLOR=$MUTED_COLOR
 	fi
 
-	echo "<span color=\"$ICON_COLOR\">$SYMBOL</span> $VOL$PERCENT$EXTRA_STUFF"
-	echo "<span color=\"$ICON_COLOR\">$SYMBOL</span> $VOL$PERCENT"
+	echo "<span color=\"$ICON_COLOR\">$SYMBOL</span>$VOL$PERCENT$EXTRA_STUFF"
+	echo "<span color=\"$ICON_COLOR\">$SYMBOL</span>$VOL$PERCENT"
 	echo "$COLOR"
 }
 

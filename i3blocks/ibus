@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Sourcing the colors
+. $HOME/.cache/wal/colors.sh
+
+ICON_COLOR=${ICON_COLOR:-"$color1"}
+LABEL=${LABEL:-"LANG"}
+
 # Left click
 if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
   	if fcitx5-remote -n | grep -q no; then
@@ -12,7 +18,13 @@ if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
 fi
 
 if fcitx5-remote -n | grep -q no; then
-	echo "NO"
+	echo "<span color=\"$ICON_COLOR\">$LABEL</span>NO"
+	echo "<span color=\"$ICON_COLOR\">$LABEL</span>NO"
 elif fcitx5-remote -n | grep -q mozc; then
-	echo "JP"
+	echo "<span color=\"$ICON_COLOR\">$LABEL</span>JP"
+	echo "<span color=\"$ICON_COLOR\">$LABEL</span>JP"
+else
+	echo "<span color=\"$ICON_COLOR\">$LABEL</span>NO?"
+	echo "<span color=\"$ICON_COLOR\">$LABEL</span>NO?"
 fi
+echo $color15

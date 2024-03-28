@@ -17,18 +17,18 @@ ICON_COLOR=${ICON_COLOR:-"$color1"}
 URGENT_VALUE=""
 
 case $BLOCK_BUTTON in
-    1) $HOME/.config/rofi/nmcli-rofi ;; # left click
-    2)  ;; # middle click 
-    3)  ;; # right click
+	1) $HOME/.config/rofi/nmcli-rofi ;; # left click
+	2)  ;; # middle click 
+	3)  ;; # right click
 esac
 
 if [[ "${SSID_NAME}" != "" ]]; then
-  echo "<span color=\"$ICON_COLOR\"></span>  ${SSID_NAME}"
-  echo "<span color=\"$ICON_COLOR\"></span>  ${SSID_NAME}"
+  echo "<span color=\"$ICON_COLOR\"></span> ${SSID_NAME}"
+  echo "<span color=\"$ICON_COLOR\"></span> ${SSID_NAME}"
   echo "$DEFAULT_COLOR"
 else
-  echo "  no connection"
-  echo "  no connection"
+  echo " no connection"
+  echo " no connection"
   echo "$MUTED_COLOR"
 
   if [[ "${URGENT_VALUE}" != "" ]] && [[ $(echo "${SSID_NAME}" | grep -we "${URGENT_VALUE}") != "" ]]; then

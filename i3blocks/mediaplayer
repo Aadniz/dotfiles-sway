@@ -46,11 +46,9 @@ if ($BLOCK_INSTANCE) {
     $player_arg = "--player='$BLOCK_INSTANCE'";
 
     if ($label_set == False){
-        if ($BLOCK_INSTANCE eq "spotify"){
+        if ($BLOCK_INSTANCE == "spotify"){
             $label = "";
-        }elsif ($BLOCK_INSTANCE eq "elisa") {
-			$label = "";
-		}
+        }
     }
 }
 
@@ -87,9 +85,9 @@ sub buttons {
             system("playerctl $player_arg next");
             usleep(DELAY * 1000) if $BLOCK_INSTANCE eq SPOTIFY_STR;
         } elsif ($ENV{'BLOCK_BUTTON'} == 4) {
-            system("playerctl $player_arg volume 0.1+");
+            system("playerctl $player_arg volume 0.01+");
         } elsif ($ENV{'BLOCK_BUTTON'} == 5) {
-            system("playerctl $player_arg volume 0.1-");
+            system("playerctl $player_arg volume 0.01-");
         }
     } elsif ($method eq 'rhythmbox') {
         if ($ENV{'BLOCK_BUTTON'} == 1) {
@@ -161,13 +159,13 @@ sub playerctl {
 	chomp $shuffle;
 	my $shuffle_icon = "";
 	if ($shuffle eq "On") {
-		$shuffle_icon = "  <span color='#a79fa1'></span>"
+		$shuffle_icon = " <span color='#93989a'></span>"
 	}
 
     if (@metadata){
         my $details = join(" - ", @metadata);
         $details =~ s/&/&amp;/g;
-        print("<span color='#f5b6ac'>$label</span>  ", "$details", "$shuffle_icon\n");
+        print("<span color='#7596b5'>$label</span> ", "$details", "$shuffle_icon\n");
     } else{
         exit(0)
     }
@@ -193,3 +191,4 @@ else {
     playerctl;
 }
 print("\n");
+print("#d2dadd\n")

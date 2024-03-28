@@ -15,7 +15,7 @@ with open(os.path.expanduser("~/.cache/wal/colors.json"), "r") as f:
     color_data = json.load(f)
 
 highlight_color = color_data["colors"]["color1"]
-loading_color = color_data["colors"]["color2"]
+loading_color = color_data["colors"]["color4"]
 white_color = color_data["colors"]["color15"]
 error_color = "#FF0000"
 
@@ -58,13 +58,13 @@ for service in data:
         name = name[0]
 
     if service["result"] == False:
-        str_builder += f'<span color="{loading_color}">I</span>'
+        str_builder += f'<span color="{loading_color}">|</span>'
     elif service["successes"] >= 1.0:
-        str_builder += f'<span color="{highlight_color}">I</span>'
+        str_builder += f'<span color="{highlight_color}">/</span>'
     elif service["successes"] > 0.7:
-        str_builder += f'<span color="{white_color}">I</span>'
+        str_builder += f'<span color="{white_color}">\</span>'
     else:
-        str_builder += f'<span color="{error_color}">I</span>'
+        str_builder += f'<span color="{error_color}">\</span>'
 
 
 print(str_builder)
