@@ -49,8 +49,5 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-;; Jira
-(package! org-jira)
-
-;; crdt
 (package! crdt)
+(package! org-ref)
