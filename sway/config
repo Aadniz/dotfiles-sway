@@ -45,12 +45,12 @@ include hardware.conf
 #
     # Start a terminal
     bindsym $mod+Return exec kitty
-	bindsym $mod+Ctrl+Return exec kitty --class floatingKitty
-	for_window [app_id="floatingKitty"] floating enable
+    bindsym $mod+Ctrl+Return exec kitty --class floatingKitty
+    for_window [app_id="floatingKitty"] floating enable, resize set 850 px 500 px, border pixel
 
     # Kill focused window
     bindsym $mod+Escape kill
-	bindsym $mod+Delete kill
+    bindsym $mod+Delete kill
 
     # Start your launcher
     bindsym $mod+q exec rofi -show run
@@ -68,7 +68,7 @@ include hardware.conf
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-	# Volume control
+    # Volume control
 	bindsym --locked XF86AudioMute exec pamixer -t && pkill -RTMIN+1 i3blocks
         bindsym --locked XF86AudioLowerVolume exec pamixer -d 1 && pkill -RTMIN+1 i3blocks
         bindsym --locked XF86AudioRaiseVolume exec pamixer -i 1 && pkill -RTMIN+1 i3blocks
@@ -97,17 +97,18 @@ include hardware.conf
     bindsym $mod+Shift+Right move right
 
 default_border normal 4
+default_floating_border pixel 2
+hide_edge_borders none
 titlebar_padding 1
 smart_borders on
-font pango:monospace 1
+font pango:monospace 11
 
 # class                 border  backgr. text    indicator child_border
-client.focused          $color1 $color1 $color1 $color1
-client.unfocused        $color0 $color0 $color0 $color0
-client.focused_inactive $color0 $color0 $color0 $color0
-#client.placeholder     #0F191A #0F191A #0F191A #0F191A
-client.urgent           $color3 $color3 $color3 $color3
-
+client.focused          $color1 $color1 $color0 $color1
+client.unfocused        $color0 $color0 $color8 $color0
+client.focused_inactive $color0 $color0 $color8 $color0
+#client.placeholder     #0F191A #0F191A #909a9d #0F191A
+client.urgent           $color3 $color3 $color0 $color3
 
 #
 # Workspaces
@@ -148,7 +149,7 @@ bindsym Alt+Tab workspace back_and_forth
     # respectively.
     bindsym $mod+v splith
     bindsym $mod+c splitv
-	default_orientation auto
+    default_orientation auto
 
     # Switch the current container between different layout styles
     bindsym $mod+s sticky toggle
@@ -166,7 +167,10 @@ bindsym Alt+Tab workspace back_and_forth
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
-	bindsym $mod+d focus mode_toggle
+    bindsym $mod+d focus mode_toggle
+
+    # Border stuff
+    bindsym $mod+b border toggle
 #
 # Scratchpad:
 #
