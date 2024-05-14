@@ -4,6 +4,11 @@
 ;; sync' after modifying this file!
 
 
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets. It is optional.
+(setq user-full-name "John Doe"
+      user-mail-address "john@doe.com")
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -27,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-horizon)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -37,10 +42,10 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/org/")
 
-
 ;; [[file:config.org::*Custom splash image][Custom splash image:1]]
-(setq fancy-splash-image (expand-file-name "assets/110717214_p0_edited.png" doom-user-dir))
+(setq fancy-splash-image (expand-file-name "splash.png" doom-user-dir))
 ;; Custom splash image:1 ends here
+
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -72,16 +77,11 @@
 ;; etc).
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented
-
-;; For some reason we needed to add this here
-(require 'tramp)
-(setq tramp-connection-timeout 15)
-
-;; Keybindings
-
+;; they are implemented.
 ;; Loading sensitive info
 ;; Put this in the sensitive.el file
+
+
 ;; (setq jiralib-url "https://jirainstance.com/jira")
 ;; (setq jiralib-user-login-name "yourmail@example.com")
 ;; (setq jiralib-user "Your Name")
