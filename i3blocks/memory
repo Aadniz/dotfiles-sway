@@ -71,8 +71,6 @@ END {
 
 	# full text
 	if (percent == "true" ) {
-		#printf("%.1fG/%.1fG (%.f%%)\n", used, total, pct)
-        #printf("%.1fG/%.1fG\n", used, total)
 		if (1 > used) {
 			printf("<span color=\"%s\">%s</span>%.1fM\n", icon_color, label, used*1024)
 		} else {
@@ -82,7 +80,7 @@ END {
 		#printf("%.1fG/%.1fG\n", used, total)
 	}
 	# short text
-	printf("%.f%%\n", pct)
+	printf("<span color=\"%s\">%s</span>%.f%%\n", label, pct)
 
 	# color
 	print(color)
