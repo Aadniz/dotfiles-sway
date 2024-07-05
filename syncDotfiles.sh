@@ -6,6 +6,7 @@
 #cp ~/.cache/wal/colors-rofi-light.rasi main.rasi
 #cp ~/.config/kitty/kitty-themes/themes/Monokai_Soda.conf kitty/theme.conf
 
+rsync -avrtL ~/.zshrc .
 rsync -avrtL ~/.config/sway .
 rsync -avrtL ~/.config/kitty .
 rsync -avrtL ~/.config/nano .
