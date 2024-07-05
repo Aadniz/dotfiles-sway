@@ -14,7 +14,7 @@ set $term kitty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu exec $term --class=launcher -e sway-launcher-desktop
 
 ### Output configuration
 #
@@ -47,13 +47,22 @@ include hardware.conf
     bindsym $mod+Return exec kitty
     bindsym $mod+Ctrl+Return exec kitty --class floatingKitty
     for_window [app_id="floatingKitty"] floating enable, resize set 850 px 500 px, border pixel
+    for_window [class="Microsoft-edge"] move scratchpad, resize set 1000 px 1000 px, border pixel, scratchpad show
+#    for_window [app_id="kitty-sway-launcher-desktop"] floating enable, resize set 900 px 700 px, border pixel
+    for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
+    for_window [app_id="mpv"] floating enable, border pixel
+    for_window [class="feh"] floating enable, border pixel
+    for_window [app_id="nemo"] move scratchpad, resize set 1100 px 600 px, border pixel, scratchpad show
+    for_window [app_id="kitty"] border pixel
+    for_window [app_id="discord"] border pixel
+    for_window [app_id="Element"] border pixel
 
     # Kill focused window
     bindsym $mod+Escape kill
     bindsym $mod+Delete kill
 
     # Start your launcher
-    bindsym $mod+q exec rofi -show run
+    bindsym $mod+q exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -178,11 +187,11 @@ bindsym Alt+Tab workspace back_and_forth
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+    bindsym $mod+Shift+z move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    bindsym $mod+z scratchpad show
 #
 # Resizing containers:
 #
@@ -244,8 +253,8 @@ bindsym $mod+r mode "resize"
     for_window [class="Microsoft-edge"]             floating enable, resize set 1200 px 1300 px
     for_window [app_id="anki"]                      floating enable, resize set 1400 px 1000 px
     for_window [instance="Godot_ProjectList"]       floating enable
-    for_window [instance="Godot_Engine"]            floating enable
-    for_window [class="Godot"]                      floating enable
+    #for_window [instance="Godot_Engine"]            floating enable
+    #for_window [class="Godot"]                      floating enable
 
 #
 # Status Bar:
