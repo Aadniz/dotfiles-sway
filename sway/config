@@ -62,7 +62,7 @@ include hardware.conf
     bindsym $mod+Delete kill
 
     # Start your launcher
-    bindsym $mod+q exec $menu
+    bindsym $mod+q exec TERMINAL_COMMAND=' ' $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -283,7 +283,7 @@ bar {
 }
 
 # swaysome
-# include swaysome
+include swaysome
 
 # Applications to autostart
 include autostart.conf
