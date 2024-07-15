@@ -208,6 +208,12 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+bindsym --whole-window {
+    $mod+button4 gaps inner current plus 5
+    $mod+button5 gaps inner current minus 5
+}
+
+
 ### Custom stuff
 
 	title_align center
