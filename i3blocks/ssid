@@ -6,6 +6,7 @@
 
 
 SSID_NAME=$(nmcli con show --active | grep wifi | awk '{print $1}')
+WIRED_CON=$(nmcli con show --active | grep -wic ethernet)
 
 DEFAULT_COLOR=${DEFAULT_COLOR:-"$color15"}
 MUTED_COLOR=${MUTED_COLOR:-"#a89984"}
@@ -17,15 +18,19 @@ ICON_COLOR=${ICON_COLOR:-"$color1"}
 URGENT_VALUE=""
 
 case $BLOCK_BUTTON in
-	1) $HOME/.config/rofi/nmcli-rofi ;; # left click
-	2)  ;; # middle click 
-	3)  ;; # right click
+    1) $HOME/.config/rofi/nmcli-rofi ;; # left click
+    2)  ;; # middle click
+    3)  ;; # right click
 esac
 
 if [[ "${SSID_NAME}" != "" ]]; then
   echo "<span color=\"$ICON_COLOR\"></span> ${SSID_NAME}"
   echo "<span color=\"$ICON_COLOR\"></span> ${SSID_NAME}"
   echo "$DEFAULT_COLOR"
+elif [[ $WIRED_CON ]]; then
+  echo ""
+  echo ""
+  echo "$MUTED_COLOR"
 else
   echo " no connection"
   echo " no connection"
