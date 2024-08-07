@@ -22,8 +22,13 @@ elif [[ "${BATTERY_POWER}" -le 50 ]]; then
   BATTERY_ICON=""
 elif [[ "${BATTERY_POWER}" -le 75 ]]; then
   BATTERY_ICON=""
-else
+elif [[ "${BATTERY_POWER}" -le 98 ]]; then
   BATTERY_ICON=""
+else
+  echo ""
+  echo ""
+  echo "$color15"
+  exit
 fi
 
 
